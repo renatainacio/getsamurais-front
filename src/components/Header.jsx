@@ -12,12 +12,12 @@ export default function Header() {
         <HeaderSC>
             <TopMenu>
                 <LeftOptions>
-                    { auth ? <GreenP onClick={signOut}>Seja bem-vindo(a), {auth ? auth.name : ""}!</GreenP> : <GreenP>  </GreenP>}
+                    { auth ? <GreenP onClick={signOut}>Seja bem-vindo(a), {auth ? auth.username : ""}!</GreenP> : <GreenP>  </GreenP>}
                 </LeftOptions>
                 <RightOptions>
                     { auth ? <p><Link to="/">Home</Link></p> : <GreenP><Link to="/signin">Entrar</Link></GreenP>}
-                    { auth ? <p><Link to="/ranking">Samurais</Link></p> : <p><Link to="/signup">Cadastrar-se</Link></p> }
-                    { auth ? <p onClick={() => {signOut(); navigate("/samurais")}}>Sair</p> : "" }
+                    { auth ? <p><Link to="/samurais">Samurais</Link></p> : <p><Link to="/signup">Cadastrar-se</Link></p> }
+                    { auth ? <p onClick={() => {signOut(); navigate("/signin")}}>Sair</p> : "" }
                 </RightOptions>
             </TopMenu>
             <Logo>

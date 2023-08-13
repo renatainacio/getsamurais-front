@@ -24,7 +24,10 @@ export default function SignIn() {
     });
     promise.catch((err) => {
       setLoading(false);
-      alert(err.response.data);
+      if (err.response.status === 401)
+        alert("Não autorizado");
+      else
+        alert("Erro no servidor");
     });
     setLoading(false);
   }
@@ -36,19 +39,20 @@ export default function SignIn() {
       }
     }
     console.log(config);
-    // const promiseUser = axios.get(`${import.meta.env.VITE_API_URL}/users/me`, config);
-    // const userData = {};
-    // promiseUser.then((resp) => {
-    //   userData.name = resp.data.name;
-    //   userData.token = token;
-    //   console.log(userData);
-    //   signIn(userData);
-    //   navigate("/");
-    // });
-    // promiseUser.catch((err) => {
-    //   setLoading(false);
-    //   alert(err.response.data);
-    // });
+    const promiseUser = axios.get(`${import.meta.env.VITE_API_URL}/users/me`, config);
+    const userData = {};
+    promiseUser.then((resp) => {
+      console.log(resp.data);
+      userData.username = resp.data.username;
+      userData.token = token;
+      console.log(userData);
+      signIn(userData);
+      navigate("/");
+    });
+    promiseUser.catch((err) => {
+      setLoading(false);
+      alert(err.response.data);
+    });
   }
 
   function handleChange(e) {

@@ -75,9 +75,13 @@ export default function HomePage() {
 
     return(
         <Home>
+            <h1>Meus serviços</h1>
+
+            
+            <h2>Novo Serviço</h2>
             <form onSubmit={handleSubmit}>
                 <input
-                placeholder="Links que cabem no bolso"
+                placeholder="Nome do Serviço"
                 type="text"
                 name="url"
                 value={formData.url}
