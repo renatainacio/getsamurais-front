@@ -1,18 +1,13 @@
 import { styled } from "styled-components"
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import useAuth from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
-import { FaTrash, FaPencilAlt } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 export default function HomePage() {
 
     const { auth } = useAuth();
     const navigate = useNavigate();
-    const [formData, setFormData] = useState({ service: ""});
-    const [loading, setLoading] = useState(false);
-    const [update, setUpdate] = useState(0);
-    const [userServices, setUserServices] = useState([]);
     let config;
 
     config = {
@@ -22,85 +17,18 @@ export default function HomePage() {
       }
 
     useEffect(() => {
-        !auth ? navigate("/signin") : "";
-        const promise = axios.get(`${import.meta.env.VITE_API_URL}/users/me/services`, config);
-        promise.then((res) => {
-            console.log(res.data);
-            setUserServices(res.data);
-        });
-        promise.catch((err) => {
-            setLoading(false);
-            alert(err.response.data);
-        });
-    }, [update]);
-
-    function handleSubmit(e) {
-      e.preventDefault();
-      setLoading(true);
-    //   const promise = axios.post(`${import.meta.env.VITE_API_URL}/urls/shorten`, formData, config);
-    //   promise.then((res) => {
-    //     setLoading(false);
-    //     console.log(res.data);
-    //     setUpdate(update + 1);
-    //   });
-    //   promise.catch((err) => {
-    //     setLoading(false);
-    //     alert(err.response.data);
-    //   });
-      setLoading(false);
-      setFormData({url: ""});
-    }
-
-    function deleteUrl(id, shortUrl){
-        if(window.confirm(`Tem certeza que deseja deletar a url ${shortUrl}?`)){
-            // const promise = axios.delete(`${import.meta.env.VITE_API_URL}/urls/${id}`, config);
-            // promise.then((res) => {
-            //     setUpdate(update + 1);
-            //   });
-            //   promise.catch((err) => {
-            //     alert(err.response.data);
-            //   });
-        }
-    }
-
-    function handleChange(e) {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-      } 
+        auth ? navigate("/me") : "";
+    }, []);
 
     return(
         <Home>
-            <h2>Meus Serviços</h2>
-            <ul>
-            { userServices ? 
-            userServices.map((item) => 
-            <li key={item.id}>
-                <div >
-                    <p>{item.description}</p>
-                    <p>R$ {item.price/100} per {item.priceUnit}</p>
-                </div>
-                <div>
-                    <button onClick={() => deleteUrl(item.id, item.shortUrl)}><FaPencilAlt color="rgba(234, 79, 79, 1)" size="30"/></button>
-                    <button onClick={() => deleteUrl(item.id, item.shortUrl)}><FaTrash color="rgba(234, 79, 79, 1)" size="30"/></button>
-                </div>
-            </li>)
-            : <p>Você ainda não possui nenhum serviço cadastrado</p>}
-            </ul>
-
-            <h2>Novo Serviço</h2>
-            <form onSubmit={handleSubmit}>
-                <input
-                placeholder="Nome do Serviço"
-                type="text"
-                name="url"
-                value={formData.url}
-                onChange={handleChange}
-                required
-                disabled={loading}
-                />
-                <button disabled={loading || !formData.url}>
-                Postar Serviço
-                </button>
-            </form>
+            <h1>Bem-vindo ao Get Samurais!</h1>
+            <h2><Link to="/signup">Cadastre-se</Link> ou <Link to="/signin">faça login</Link>  e tenha acesso aos melhores profissionais do Brasil!</h2>
+            <div>
+                <p>Nossa plataforma foi projetada para conectar pessoas com profissionais talentosos em diversas áreas.</p>
+                <p>Com uma comunidade de prestadores de serviços experientes e dedicados, estamos aqui para atender às suas necessidades de maneira eficiente e confiável.</p>
+                <p>Junte-se a nós e descubra a conveniência de encontrar os serviços que você procura, tudo em um único lugar.</p>
+            </div>
         </Home>
     )
 }
@@ -111,37 +39,30 @@ const Home = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 40px 60px;
+    margin: 40px 40px;
+    border-radius: 15px;
+    h1 {
+        font-size: 60px;
+        margin-top: 20px;
+    }
     h2{
         color:#417cd8;
         font-weight:700;
         font-size: 24px;
         margin-top: 50px;
+        margin-bottom: 60px;
     }
-    li {
-        margin: 20px;
-        width: 1020px;
-        height: 62px;
+    a{
+        color: #b9d841;
+    }
+    div{
         display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        background-color: #EEEEEE;
-        color: #000000;
-        border: 1px solid rgba(120, 177, 89, 0.25);
-        border-radius: 5px;
-        div{
-            display: flex;
-        }
-        p {
-            padding: 0 30px;
-        }
-        button {
-            margin: 0px;
-            width: 100px;
-            height: 62px;
-            background-color: white;
-            border-radius: 5px;
-            border: 1px solid rgba(120, 177, 89, 0.25);
-        }
+        flex-direction: column;
+    }
+    p{
+        color: #545454;
+        font-size: 20px;
+        line-height: 30px;
     }
 `;

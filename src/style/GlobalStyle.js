@@ -6,6 +6,12 @@ const GlobalStyle = createGlobalStyle`
         font-family: 'Lexend Deca', sans-serif;
         color: #D84241
     }
+    h2{
+        color:#417cd8;
+        font-weight:700;
+        font-size: 24px;
+        margin-top: 50px;
+    }
     button{
         width: 182px;
         height: 60px;
@@ -16,6 +22,9 @@ const GlobalStyle = createGlobalStyle`
         line-height: 18px;
         color: white;
         margin: 25px;
+    }
+    button:disabled{
+        background-color: #ABABAB;
     }
     input{
         width: 600px;

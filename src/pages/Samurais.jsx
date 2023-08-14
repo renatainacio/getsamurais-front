@@ -20,8 +20,8 @@ export default function Samurais() {
 
 
     return(
-        <Rank>
-            <h2><img src="trophy.png"/> list</h2>
+        <List>
+            <h2>Serviços Disponíveis</h2>
             <Board>
                 <ul>
                     { list.length > 0 ?
@@ -30,16 +30,16 @@ export default function Samurais() {
                                 {index + 1}. {user.name} - {user.linksCount} links - {user.visitCount} visualizações
                             </li>
                         )
-                        : ""
+                        : <p>Ainda não há serviços disponíveis</p>
                     }
                 </ul>
             </Board>
             { auth ? "" : <h2>Crie sua conta para usar nosso serviço!</h2>}
-        </Rank>
+        </List>
     )
 }
 
-const Rank = styled.div`
+const List = styled.div`
     background-color: #FFFFFF;
     font-family: 'Lexend Deca', sans-serif;
     display: flex;
@@ -52,6 +52,9 @@ const Rank = styled.div`
     }
     img {
         width: 35px;
+    }
+    p{
+        text-align: center;
     }
 `;
 

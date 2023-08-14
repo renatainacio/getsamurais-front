@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import axios from "axios";
 import api from "../services/Api";
+import { Link } from "react-router-dom";
 
 export default function SignIn() {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -86,6 +87,7 @@ export default function SignIn() {
           Entrar
         </button>
       </form>
+      <p>Ainda não é usuário? <Link to="/signup">Cadastre-se</Link></p>
     </SignInContainer>
   );
 }
@@ -94,9 +96,11 @@ const SignInContainer = styled.main`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  align-items: center;
   margin-top: 15px;
   p {
     margin-top: 10px;
+    color: #545454;
   }
   width: 100vw;
   height: calc(100vh - 285px);

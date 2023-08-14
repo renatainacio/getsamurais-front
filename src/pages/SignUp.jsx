@@ -5,6 +5,7 @@ import api from "../services/Api";
 import { IMaskInput } from "react-imask";
 import axios from "axios";
 import PasswordChecklist from 'react-password-checklist';
+import { Link } from "react-router-dom";
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
@@ -143,7 +144,7 @@ export default function SignUp() {
           disabled={loading}
           mask="(00)00000-0000"
         />
-        <select id="state" name="state" onChange={handleChangeState} disabled={loading}>
+        <select id="state" name="state" onChange={handleChangeState} disabled={loading} required>
           <option value="">Selecione o Estado *</option>
           {
             ufs.map(uf =>
@@ -153,7 +154,7 @@ export default function SignUp() {
             )
           }
         </select>
-        <select id="city" name="city" onChange={handleChange} disabled={loading}>
+        <select id="city" name="city" onChange={handleChange} disabled={loading} required>
           <option value="">Selecione a Cidade *</option>
           {
             cities.map(city =>
@@ -198,6 +199,13 @@ export default function SignUp() {
             value={formData.password}
             valueAgain={formData.confirmPassword}
             onChange={(isValid) => {}}
+            messages={{
+              minLength: "A senha possui mais de 6 caracteres",
+              specialChar: "A senha possui caracteres especiais",
+              number: "A senha possui um número",
+              capital: "A senha possui uma letra maiúscula",
+              match: "As senhas são iguais",
+            }}
           />
         </Checklist>
         <button
@@ -217,6 +225,7 @@ export default function SignUp() {
           Criar Conta
         </button>
       </form>
+      <p>Já possui uma conta? <Link to="/signin">Faça login</Link></p>
     </SignUpContainer>
   );
 }
@@ -226,10 +235,13 @@ const SignUpContainer = styled.main`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  align-items: center;
   width: 100vw;
-  height: calc(100vh - 285px);
   padding: 25px;
   color: #474A51;
+  p {
+    margin-bottom:50px;
+  }
 `;
 
 const Gender = styled.div`
