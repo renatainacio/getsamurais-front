@@ -10,7 +10,7 @@ const GlobalStyle = createGlobalStyle`
         width: 182px;
         height: 60px;
         border-radius: 12px;
-        background-color: #8bd841;
+        background-color: #41d842;
         font-weight: 700;
         font-size: 15px;
         line-height: 18px;

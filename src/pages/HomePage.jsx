@@ -3,16 +3,16 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import useAuth from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
-import { FaTrash } from "react-icons/fa";
+import { FaTrash, FaPencilAlt } from "react-icons/fa";
 
 export default function HomePage() {
 
     const { auth } = useAuth();
     const navigate = useNavigate();
-    const [formData, setFormData] = useState({ url: ""});
+    const [formData, setFormData] = useState({ service: ""});
     const [loading, setLoading] = useState(false);
     const [update, setUpdate] = useState(0);
-    const [userDetails, setUserDetails] = useState({});
+    const [userServices, setUserServices] = useState([]);
     let config;
 
     config = {
@@ -22,16 +22,16 @@ export default function HomePage() {
       }
 
     useEffect(() => {
-        !auth ? navigate("/samurais") : "";
-        // const promise = axios.get(`${import.meta.env.VITE_API_URL}/users/me`, config);
-        // promise.then((res) => {
-        //     console.log(res.data);
-        //     setUserDetails(res.data);
-        // });
-        // promise.catch((err) => {
-        //     setLoading(false);
-        //     alert(err.response.data);
-        // });
+        !auth ? navigate("/signin") : "";
+        const promise = axios.get(`${import.meta.env.VITE_API_URL}/users/me/services`, config);
+        promise.then((res) => {
+            console.log(res.data);
+            setUserServices(res.data);
+        });
+        promise.catch((err) => {
+            setLoading(false);
+            alert(err.response.data);
+        });
     }, [update]);
 
     function handleSubmit(e) {
@@ -63,21 +63,29 @@ export default function HomePage() {
         }
     }
 
-    function redirect(shortUrl){
-        navigator.clipboard.writeText(`${import.meta.env.VITE_API_URL}/urls/open/${shortUrl}`);
-        alert("URl copiada!");
-        // axios.get(`${import.meta.env.VITE_API_URL}/urls/open/${shortUrl}`)
-    }
-
     function handleChange(e) {
         setFormData({ ...formData, [e.target.name]: e.target.value });
       } 
 
     return(
         <Home>
-            <h1>Meus serviços</h1>
+            <h2>Meus Serviços</h2>
+            <ul>
+            { userServices ? 
+            userServices.map((item) => 
+            <li key={item.id}>
+                <div >
+                    <p>{item.description}</p>
+                    <p>R$ {item.price/100} per {item.priceUnit}</p>
+                </div>
+                <div>
+                    <button onClick={() => deleteUrl(item.id, item.shortUrl)}><FaPencilAlt color="rgba(234, 79, 79, 1)" size="30"/></button>
+                    <button onClick={() => deleteUrl(item.id, item.shortUrl)}><FaTrash color="rgba(234, 79, 79, 1)" size="30"/></button>
+                </div>
+            </li>)
+            : <p>Você ainda não possui nenhum serviço cadastrado</p>}
+            </ul>
 
-            
             <h2>Novo Serviço</h2>
             <form onSubmit={handleSubmit}>
                 <input
@@ -90,22 +98,9 @@ export default function HomePage() {
                 disabled={loading}
                 />
                 <button disabled={loading || !formData.url}>
-                Encurtar link
+                Postar Serviço
                 </button>
             </form>
-            <ul>
-            {userDetails.shortenedUrls && userDetails.shortenedUrls.length !== 0 ? 
-            userDetails.shortenedUrls.map((item) => 
-            <li key={item.id}>
-                <div onClick={() => redirect(item.shortUrl)}>
-                    <p>{item.url}</p>
-                    <p>{item.shortUrl}</p>
-                    <p>Quantidade de visitantes: {item.visitCount}</p>
-                </div>
-                <button onClick={() => deleteUrl(item.id, item.shortUrl)}><FaTrash color="rgba(234, 79, 79, 1)" size="30"/></button>
-            </li>)
-            : ""}
-            </ul>
         </Home>
     )
 }
@@ -116,8 +111,11 @@ const Home = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    form {
-        flex-direction: row;
+    h2{
+        color:#417cd8;
+        font-weight:700;
+        font-size: 24px;
+        margin-top: 50px;
     }
     li {
         margin: 20px;
@@ -127,8 +125,8 @@ const Home = styled.div`
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        background-color: rgb(120, 177, 89);
-        color: white;
+        background-color: #EEEEEE;
+        color: #000000;
         border: 1px solid rgba(120, 177, 89, 0.25);
         border-radius: 5px;
         div{
@@ -139,6 +137,7 @@ const Home = styled.div`
         }
         button {
             margin: 0px;
+            width: 100px;
             height: 62px;
             background-color: white;
             border-radius: 5px;
