@@ -2,24 +2,24 @@ import { styled } from "styled-components"
 import axios from "axios";
 import { useEffect, useState } from "react";
 import useAuth from "../hooks/useAuth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {CurrencyInput} from 'react-currency-mask'
 
-export default function User() {
+export default function EditService() {
 
     const { auth } = useAuth();
     const navigate = useNavigate();
+    const {serviceId} = useParams();
     const [formData, setFormData] = useState({
-        categoryId: "",
+        categoryId: 1,
         photo: "",
         description: "",
-        price: "",
-        priceUnit: ""
+        price: 0,
+        priceUnit: 1
     });
     const [loading, setLoading] = useState(false);
     const [categories, setCategories] = useState([]);
     const [update, setUpdate] = useState(0);
-    const [userServices, setUserServices] = useState([]);
     let config;
 
     config = {
@@ -32,11 +32,10 @@ export default function User() {
         if (!auth) 
             navigate("/")
         else {
-            const promise = axios.get(`${import.meta.env.VITE_API_URL}/users/me/services`, config);
+            const promise = axios.get(`${import.meta.env.VITE_API_URL}/services/${serviceId}`, config);
             const promiseCategory = axios.get(`${import.meta.env.VITE_API_URL}/categories`);
             promise.then((res) => {
-                console.log(res.data);
-                setUserServices(res.data);
+                setFormData({...res.data, price: res.data.price/100})
             });
             promise.catch((err) => {
                 alert(err.response.data);
@@ -55,11 +54,12 @@ export default function User() {
       setLoading(true);
       console.log(formData);
       const service ={...formData, price: formData.price*100};
-      const promise = axios.post(`${import.meta.env.VITE_API_URL}/services`, service, config);
+      const promise = axios.put(`${import.meta.env.VITE_API_URL}/services/${serviceId}`, service, config);
       promise.then((res) => {
         setLoading(false);
         console.log(res.data);
         setUpdate(update + 1);
+        navigate("/");
       });
       promise.catch((err) => {
         setLoading(false);
@@ -82,9 +82,9 @@ export default function User() {
         setFormData({ ...formData, price: originalValue });
     } 
 
+    console.log(formData);
     return(
-        <UserPage>
-            {!auth ? <p>Cadastre-se e tenha acesso aos melhores profissionais do Brasil!</p> :   
+        <EditPage>
             <div>
                 <h2>Editar Serviço</h2>
                 <form onSubmit={handleSubmit}>
@@ -132,13 +132,12 @@ export default function User() {
                 Postar Serviço
                 </button>
                 </form>
-            </div>         
-            }
-        </UserPage>
+            </div>
+        </EditPage>
     )
 }
 
-const UserPage = styled.div`
+const EditPage = styled.div`
     background-color: #FFFFFF;
     font-family: 'Lexend Deca', sans-serif;
     display: flex;

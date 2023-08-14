@@ -46,6 +46,7 @@ export default function SignIn() {
       console.log(resp.data);
       userData.username = resp.data.username;
       userData.token = token;
+      userData.gender = resp.data.gender;
       console.log(userData);
       signIn(userData);
       navigate("/");

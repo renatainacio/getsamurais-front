@@ -111,8 +111,8 @@ export default function User() {
         });
     }
 
-    function editService(id, description){
-        alert("Em breve!")
+    function editService(id){
+        navigate(`/services/${id}`)
     }
 
     function handleChange(e) {

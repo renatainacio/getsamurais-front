@@ -2,6 +2,7 @@ import HomePage from './pages/HomePage';
 import SignUp from './pages/SignUp';
 import SignIn from './pages/SignIn';
 import Header from './components/Header';
+import EditService from './pages/EditService';
 import Footer from './components/Footer';
 import User from './pages/User';
 import Samurais from './pages/Samurais';
@@ -19,6 +20,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/samurais" element={<Samurais />} />
+        <Route path="/services/:serviceId" element={<EditService />} />
       </Routes>
       <Footer />
     </AuthProvider>

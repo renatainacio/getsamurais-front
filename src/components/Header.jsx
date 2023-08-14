@@ -6,12 +6,14 @@ import { useNavigate } from "react-router-dom";
 export default function Header() {
     const { auth, signOut } = useAuth();
     const navigate = useNavigate();
-
+    console.log(auth)
     return(
         <HeaderSC>
             <TopMenu>
                 <LeftOptions>
-                    { auth ? <GreenP><Link to="/me">Seja bem-vindo(a), {auth ? auth.username : ""}!</Link></GreenP> : <GreenP>  </GreenP>}
+                    { auth ? <GreenP><Link to="/me">
+                        Seja bem-vind{auth.gender === "female" ? 'a' : auth.gender === "male" ? 'o' : 'e'}, {auth ? auth.username : ""}!
+                    </Link></GreenP> : <GreenP>  </GreenP>}
                 </LeftOptions>
                 <RightOptions>
                     { auth ? <p><Link to="/">Home</Link></p> : <GreenP><Link to="/signin">Entrar</Link></GreenP>}
@@ -20,7 +22,7 @@ export default function Header() {
                 </RightOptions>
             </TopMenu>
             <Logo>
-                <img src="samurai_1623791.png"/>
+                <img src="/samurai_1623791.png"/>
                 <h1>Get Samurais</h1>
             </Logo>
         </HeaderSC>

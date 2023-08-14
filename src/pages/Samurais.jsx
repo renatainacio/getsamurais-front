@@ -8,6 +8,7 @@ export default function Samurais() {
     const [list, setList] = useState([]);
     const url = import.meta.env.VITE_API_URL;
     const { auth } = useAuth();
+    const [search, setSearch] = useState("");
     let config;
 
     config = {
@@ -24,13 +25,37 @@ export default function Samurais() {
         promise.catch((err) => alert(err.response.data));
     }, []);
 
+    function handleChange(e) {
+        setSearch(e.target.value);
+}
 
+    function handleSubmit(e) {
+        e.preventDefault();
+        const promise = axios.get(`${url}/services?q=${search}`, config);
+        promise.then((res) => {
+          setList(res.data)
+        });
+        promise.catch((err) => {
+          alert(err.response.data);
+        });
+      }
 
     return(
         <List>
          { auth ? 
          <span>
             <h2>Serviços Disponíveis</h2>
+            <form onSubmit={handleSubmit}>
+                <input
+                    placeholder="Buscar Serviço"
+                    type="text"
+                    name="description"
+                    value={search}
+                    onChange={handleChange}
+                    required
+                    />
+                <button>Buscar</button>
+            </form>
             <Board>
             { list.length > 0 ?
                 <table>
@@ -86,6 +111,11 @@ const List = styled.div`
     }
     p{
         text-align: center;
+    }
+    form{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
     }
 `;
 
