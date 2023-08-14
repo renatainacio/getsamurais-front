@@ -102,9 +102,11 @@ const List = styled.div`
     align-items: center;
     margin-bottom: 200px;
     h2 {
-        font-weight: 700;
-        font-size: 36px;
-        line-height: 45px;
+        margin-bottom: 20px;
+        color:#417cd8;
+        font-weight:700;
+        font-size: 30px;
+        margin-top: 50px;
     }
     img {
         width: 35px;
