@@ -25,7 +25,7 @@ export default function SignIn() {
     });
     promise.catch((err) => {
       setLoading(false);
-      if (err.response.status === 401)
+      if (err.response.status && err.response.status === 401)
         alert("Não autorizado");
       else
         alert("Erro no servidor");

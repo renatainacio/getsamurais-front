@@ -2,7 +2,6 @@ import { styled } from "styled-components"
 import {Link} from "react-router-dom"
 import useAuth from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
-import { IMaskInput } from "react-imask"; 
 
 export default function Header() {
     const { auth, signOut } = useAuth();
@@ -12,12 +11,12 @@ export default function Header() {
         <HeaderSC>
             <TopMenu>
                 <LeftOptions>
-                    { auth ? <GreenP onClick={signOut}>Seja bem-vindo(a), {auth ? auth.username : ""}!</GreenP> : <GreenP>  </GreenP>}
+                    { auth ? <GreenP><Link to="/me">Seja bem-vindo(a), {auth ? auth.username : ""}!</Link></GreenP> : <GreenP>  </GreenP>}
                 </LeftOptions>
                 <RightOptions>
                     { auth ? <p><Link to="/">Home</Link></p> : <GreenP><Link to="/signin">Entrar</Link></GreenP>}
                     { auth ? <p><Link to="/samurais">Samurais</Link></p> : <p><Link to="/signup">Cadastrar-se</Link></p> }
-                    { auth ? <p onClick={() => {signOut(); navigate("/signin")}}>Sair</p> : "" }
+                    { auth ? <p onClick={() => {signOut(); navigate("/")}}>Sair</p> : "" }
                 </RightOptions>
             </TopMenu>
             <Logo>
@@ -35,11 +34,12 @@ const Logo = styled.div`
   font-size: 30px;
   font-weight: 700;
   img{
-    width: 50px;
+    width: 100px;
     padding-right: 25px;
   }  
   h1{
     margin-top: 20px;
+    font-size: 40px;
   }
 `;
 
@@ -48,7 +48,7 @@ const RightOptions = styled.div`
     display: flex;
     justify-content: flex-end;
     font-weight: 700;
-    font-size: 14px;
+    font-size: 18px;
     line-height: 18px;
     color: #474A51;
     p {
@@ -58,6 +58,7 @@ const RightOptions = styled.div`
 
 const LeftOptions = styled.div`
     width: 400px;
+    font-size: 18px;
 `;
 
 const TopMenu = styled.div`

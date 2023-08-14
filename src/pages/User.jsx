@@ -77,14 +77,19 @@ export default function User() {
 
     function deleteService(id, description){
         if(window.confirm(`Tem certeza que deseja excluir o serviço ${description}?`)){
-            // const promise = axios.delete(`${import.meta.env.VITE_API_URL}/urls/${id}`, config);
-            // promise.then((res) => {
-            //     setUpdate(update + 1);
-            //   });
-            //   promise.catch((err) => {
-            //     alert(err.response.data);
-            //   });
+            console.log(id);
+            const promise = axios.delete(`${import.meta.env.VITE_API_URL}/services/${id}`, config);
+            promise.then((res) => {
+                setUpdate(update + 1);
+              });
+              promise.catch((err) => {
+                alert(err.response.data);
+              });
         }
+    }
+
+    function editService(id, description){
+        alert("Em breve!")
     }
 
     function handleChange(e) {
@@ -99,22 +104,22 @@ export default function User() {
         <UserPage>
             {!auth ? <p>Cadastre-se e tenha acesso aos melhores profissionais do Brasil!</p> :   
             <div>
-                <h2>Meus Serviços</h2>
-                <ul>
-                { userServices ? 
-                userServices.map((item) => 
-                <li key={item.id}>
-                    <div >
-                        <p>{item.description}</p>
-                        <p>R$ {item.price/100} per {item.priceUnit}</p>
-                    </div>
-                    <div>
-                        <button onClick={() => deleteService(item.id, item.description)}><FaPencilAlt color="rgba(234, 79, 79, 1)" size="30"/></button>
-                        <button onClick={() => deleteService(item.id, item.description)}><FaTrash color="rgba(234, 79, 79, 1)" size="30"/></button>
-                    </div>
-                </li>)
+                <h2>Meus Serviços</h2> 
+                { userServices.length ? 
+                    <ul>
+                    {userServices.map((item) => 
+                        <li key={item.id}>
+                            <div>
+                                <p>{item.description}</p>
+                                <p>R$ {item.price/100} per {item.priceUnit}</p>
+                            </div>
+                            <div>
+                                <button onClick={() => editService(item.id, item.description)}><FaPencilAlt color="rgba(234, 79, 79, 1)" size="30"/></button>
+                                <button onClick={() => deleteService(item.id, item.description)}><FaTrash color="rgba(234, 79, 79, 1)" size="30"/></button>
+                            </div>
+                        </li>)}
+                    </ul>
                 : <p>Você ainda não possui nenhum serviço cadastrado</p>}
-                </ul>
 
                 <h2>Novo Serviço</h2>
                 <form onSubmit={handleSubmit}>
@@ -174,6 +179,9 @@ const UserPage = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    h2 {
+        margin-bottom: 20px;
+    }
     li {
         margin: 20px;
         width: 1020px;

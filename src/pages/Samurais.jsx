@@ -28,36 +28,43 @@ export default function Samurais() {
 
     return(
         <List>
+         { auth ? 
+         <span>
             <h2>Serviços Disponíveis</h2>
             <Board>
+            { list.length > 0 ?
                 <table>
-                    <tr>
-                        <th>Serviço</th>
-                        <th>Prestador</th>
-                        <th>Preço</th>
-                        <th>Localidade</th>
-                        <th>Contato</th>
-                    </tr>
-                { list.length > 0 ?
-                    list.map((service, index) =>
-                        <tr key={service.id}>
-                            <td>
-                                <div>
-                                    <img src={service.photo ? service.photo : "naodisponivel.png"} />
-                                    <span>{service.description}</span>
-                                </div>
-                            </td>
-                            <td>{service.username}</td>
-                            <td>{service.price/100} {service.priceUnit ? `/ ${service.priceUnit}` : "" }</td>
-                            <td>{service.city} - {service.state}</td>
-                            <td>{service.email} {service.phone}</td>
+                    <thead>
+                        <tr>
+                            <th>Serviço</th>
+                            <th>Prestador</th>
+                            <th>Preço</th>
+                            <th>Localidade</th>
+                            <th>Contato</th>
                         </tr>
-                    )
-                    : <p>Ainda não há serviços disponíveis</p>
-                }
+                    </thead>
+                    <tbody>
+                            {list.map((service, index) =>
+                                <tr key={service.id}>
+                                    <td>
+                                        <div>
+                                            <img src={service.photo ? service.photo : "naodisponivel.png"} />
+                                            <span>{service.description}</span>
+                                        </div>
+                                    </td>
+                                    <td>{service.username}</td>
+                                    <td>R${service.price/100} {service.priceUnit ? `/ ${service.priceUnit}` : "" }</td>
+                                    <td>{service.city} - {service.state}</td>
+                                    <td>{service.email} {service.phone}</td>
+                                </tr>
+                            )}
+                    </tbody>
                 </table>
+                : <p>Ainda não há serviços disponíveis</p>
+            }
             </Board>
-            { auth ? "" : <h2>Crie sua conta para usar nosso serviço!</h2>}
+         </span>
+            : <h2>Crie sua conta para usar nosso serviço!</h2>}
         </List>
     )
 }
@@ -68,6 +75,7 @@ const List = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 200px;
     h2 {
         font-weight: 700;
         font-size: 36px;
