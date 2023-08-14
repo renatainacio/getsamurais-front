@@ -205,6 +205,10 @@ const UserPage = styled.div`
     align-items: center;
     h2 {
         margin-bottom: 20px;
+        color:#417cd8;
+        font-weight:700;
+        font-size: 24px;
+        margin-top: 50px;
     }
     li {
         margin: 20px;

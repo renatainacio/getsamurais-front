@@ -24,6 +24,7 @@ const Bottom = styled.footer`
   width: 100%;
   height: 250px;
   background: #f6f6f6;
+  font-family: 'Lexend Deca', sans-serif;
   display: flex;
   justify-content: space-between;
   padding: 0 40px;
