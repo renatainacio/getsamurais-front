@@ -55,7 +55,8 @@ export default function User() {
       e.preventDefault();
       setLoading(true);
       console.log(formData);
-      const promise = axios.post(`${import.meta.env.VITE_API_URL}/services`, formData, config);
+      const service ={...formData, price: formData.price*100};
+      const promise = axios.post(`${import.meta.env.VITE_API_URL}/services`, service, config);
       promise.then((res) => {
         setLoading(false);
         console.log(res.data);
@@ -91,7 +92,7 @@ export default function User() {
     }
 
     function handleChangeAmount(e, originalValue, maskedValue) {
-        setFormData({ ...formData, price: originalValue * 100 });
+        setFormData({ ...formData, price: originalValue });
     } 
 
     return(
