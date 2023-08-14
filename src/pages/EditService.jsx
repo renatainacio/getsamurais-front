@@ -3,7 +3,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import useAuth from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
-import { FaTrash, FaPencilAlt } from "react-icons/fa";
 import {CurrencyInput} from 'react-currency-mask'
 
 export default function User() {
@@ -75,46 +74,6 @@ export default function User() {
       });
     }
 
-    function deleteService(id, description){
-        if(window.confirm(`Tem certeza que deseja excluir o serviço ${description}?`)){
-            console.log(id);
-            const promise = axios.delete(`${import.meta.env.VITE_API_URL}/services/${id}`, config);
-            promise.then((res) => {
-                setUpdate(update + 1);
-              });
-              promise.catch((err) => {
-                alert(err.response.data);
-              });
-        }
-    }
-
-    function toggleService(item){
-        let service = {
-            categoryId: item.categoryId,
-            photo: item.photo,
-            description: item.description,
-            price: item.price,
-            priceUnit: item.priceUnit,
-            status: false
-        }
-        item.status === false ? service.status = true : service.status = false;
-        console.log(service);
-        const promise = axios.put(`${import.meta.env.VITE_API_URL}/services/${item.id}`, service, config);
-        promise.then((res) => {
-          setLoading(false);
-          console.log(res.data);
-          setUpdate(update + 1);
-        });
-        promise.catch((err) => {
-          setLoading(false);
-          alert(err.response.data);
-        });
-    }
-
-    function editService(id, description){
-        alert("Em breve!")
-    }
-
     function handleChange(e) {
             setFormData({ ...formData, [e.target.name]: e.target.value });
     }
@@ -127,25 +86,7 @@ export default function User() {
         <UserPage>
             {!auth ? <p>Cadastre-se e tenha acesso aos melhores profissionais do Brasil!</p> :   
             <div>
-                <h2>Meus Serviços</h2> 
-                { userServices.length ? 
-                    <ul>
-                    {userServices.map((item) => 
-                        <li key={item.id}>
-                            <div>
-                                <p>{item.description}</p>
-                                <p>R$ {item.price/100} per {item.priceUnit}</p>
-                            </div>
-                            <div>
-                                <button onClick={() => toggleService(item)}><p>{item.status ? "Desativar" : "Ativar"}</p></button>
-                                <button onClick={() => editService(item.id, item.description)}><FaPencilAlt color="rgba(234, 79, 79, 1)" size="30"/></button>
-                                <button onClick={() => deleteService(item.id, item.description)}><FaTrash color="rgba(234, 79, 79, 1)" size="30"/></button>
-                            </div>
-                        </li>)}
-                    </ul>
-                : <p>Você ainda não possui nenhum serviço cadastrado</p>}
-
-                <h2>Novo Serviço</h2>
+                <h2>Editar Serviço</h2>
                 <form onSubmit={handleSubmit}>
                 <select id="categoryId" name="categoryId" onChange={handleChange} disabled={loading} required>
                     <option value="">Selecione a Categoria *</option>
@@ -231,13 +172,6 @@ const UserPage = styled.div`
             background-color: white;
             border-radius: 5px;
             border: 1px solid rgba(120, 177, 89, 0.25);
-            p{
-                color: #545454;
-                font-size: 12px;
-                text-align: center;
-                margin: 0;
-                padding: 0;
-            }
         }
     }
 `;
