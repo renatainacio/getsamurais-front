@@ -36,7 +36,6 @@ export default function User() {
             const promise = axios.get(`${import.meta.env.VITE_API_URL}/users/me/services`, config);
             const promiseCategory = axios.get(`${import.meta.env.VITE_API_URL}/categories`);
             promise.then((res) => {
-                console.log(res.data);
                 setUserServices(res.data);
             });
             promise.catch((err) => {
@@ -54,12 +53,10 @@ export default function User() {
     function handleSubmit(e) {
       e.preventDefault();
       setLoading(true);
-      console.log(formData);
       const service ={...formData, price: formData.price*100};
       const promise = axios.post(`${import.meta.env.VITE_API_URL}/services`, service, config);
-      promise.then((res) => {
+      promise.then(() => {
         setLoading(false);
-        console.log(res.data);
         setUpdate(update + 1);
       });
       promise.catch((err) => {
@@ -77,9 +74,8 @@ export default function User() {
 
     function deleteService(id, description){
         if(window.confirm(`Tem certeza que deseja excluir o serviço ${description}?`)){
-            console.log(id);
             const promise = axios.delete(`${import.meta.env.VITE_API_URL}/services/${id}`, config);
-            promise.then((res) => {
+            promise.then(() => {
                 setUpdate(update + 1);
               });
               promise.catch((err) => {
@@ -98,11 +94,9 @@ export default function User() {
             status: false
         }
         item.status === false ? service.status = true : service.status = false;
-        console.log(service);
         const promise = axios.put(`${import.meta.env.VITE_API_URL}/services/${item.id}`, service, config);
-        promise.then((res) => {
+        promise.then(() => {
           setLoading(false);
-          console.log(res.data);
           setUpdate(update + 1);
         });
         promise.catch((err) => {

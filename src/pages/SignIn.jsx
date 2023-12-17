@@ -20,7 +20,6 @@ export default function SignIn() {
     const promise = api.signIn({ ...formData });
     promise.then((res) => {
       setLoading(false);
-      console.log(res.data);
       getUserDetails(res.data.token);
     });
     promise.catch((err) => {
@@ -39,15 +38,12 @@ export default function SignIn() {
         "Authorization": `Bearer ${token}`
       }
     }
-    console.log(config);
     const promiseUser = axios.get(`${import.meta.env.VITE_API_URL}/users/me`, config);
     const userData = {};
     promiseUser.then((resp) => {
-      console.log(resp.data);
       userData.username = resp.data.username;
       userData.token = token;
       userData.gender = resp.data.gender;
-      console.log(userData);
       signIn(userData);
       navigate("/");
     });

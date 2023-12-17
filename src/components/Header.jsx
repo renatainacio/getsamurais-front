@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 export default function Header() {
     const { auth, signOut } = useAuth();
     const navigate = useNavigate();
-    console.log(auth)
+
     return(
         <HeaderSC>
             <TopMenu>

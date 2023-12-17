@@ -35,7 +35,6 @@ export default function SignUp() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(formData);
     setLoading(true);
     if (formData.password !== formData.confirmPassword) {
       setLoading(false);

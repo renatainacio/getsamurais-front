@@ -52,12 +52,10 @@ export default function EditService() {
     function handleSubmit(e) {
       e.preventDefault();
       setLoading(true);
-      console.log(formData);
       const service ={...formData, price: formData.price*100};
       const promise = axios.put(`${import.meta.env.VITE_API_URL}/services/${serviceId}`, service, config);
-      promise.then((res) => {
+      promise.then(() => {
         setLoading(false);
-        console.log(res.data);
         setUpdate(update + 1);
         navigate("/");
       });
@@ -78,11 +76,10 @@ export default function EditService() {
             setFormData({ ...formData, [e.target.name]: e.target.value });
     }
 
-    function handleChangeAmount(e, originalValue, maskedValue) {
+    function handleChangeAmount(e, originalValue) {
         setFormData({ ...formData, price: originalValue });
     } 
 
-    console.log(formData);
     return(
         <EditPage>
             <div>
