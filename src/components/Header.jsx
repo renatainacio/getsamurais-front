@@ -11,12 +11,12 @@ export default function Header() {
         <HeaderSC>
             <TopMenu>
                 <LeftOptions>
-                    { auth ? <GreenP><Link to="/me">
+                    { auth ? <HighlightedText><Link to="/me">
                         Seja bem-vind{auth.gender === "female" ? 'a' : auth.gender === "male" ? 'o' : 'e'}, {auth ? auth.username : ""}!
-                    </Link></GreenP> : <GreenP>  </GreenP>}
+                    </Link></HighlightedText> : <HighlightedText>  </HighlightedText>}
                 </LeftOptions>
                 <RightOptions>
-                    { auth ? <p><Link to="/">Home</Link></p> : <GreenP><Link to="/signin">Entrar</Link></GreenP>}
+                    { auth ? <p><Link to="/">Home</Link></p> : <HighlightedText><Link to="/signin">Entrar</Link></HighlightedText>}
                     { auth ? <p><Link to="/samurais">Samurais</Link></p> : <p><Link to="/signup">Cadastrar-se</Link></p> }
                     { auth ? <p onClick={() => {signOut(); navigate("/")}}>Sair</p> : "" }
                 </RightOptions>
@@ -69,7 +69,7 @@ const TopMenu = styled.div`
     justify-content: space-between;
 `;
 
-const GreenP = styled.p`
+const HighlightedText = styled.p`
     color: #D84241;
 `
 
