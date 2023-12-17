@@ -56,11 +56,9 @@ export default function User() {
       const service ={...formData, price: formData.price*100};
       const promise = axios.post(`${import.meta.env.VITE_API_URL}/services`, service, config);
       promise.then(() => {
-        setLoading(false);
         setUpdate(update + 1);
       });
       promise.catch((err) => {
-        setLoading(false);
         alert(err.response.data);
       });
       setLoading(false);
