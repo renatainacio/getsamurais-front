@@ -1,8 +1,38 @@
-# React + Vite
+# Get Samurais
+"Get Samurais" is a REST API designed for connecting service providers to service users. This application enables users to register, query and update services.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Demo
+Try it out at this [link](https://getsamurais-front-renatainacio.vercel.app/)!
 
-Currently, two official plugins are available:
+# How it works
+This project is the front-end of the application. To check the back-end, please refer to [link](https://github.com/renatainacio/getsamurais-api)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
+- Sign up / Sign in
+- Register a service
+- List all services
+- Search for a service by name
+- Filter services by category
+
+# Technologies
+
+- Javascript
+- React (v.18.2.0);
+- Vite;
+- Styled-Components;
+- Axios;
+
+# How to run it for development
+To run this project in a development mode, follow these steps:
+
+1. Clone this repository
+2. Install all dependencies
+
+    ```bash
+    npm i
+    ```
+3. Populate `.env` file based on `.env.example`. `VITE_API_URL` should point to the API.
+4. Run in the terminal:
+    ```bash
+    npm run dev
+    ```
