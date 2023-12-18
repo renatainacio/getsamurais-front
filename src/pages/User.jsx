@@ -111,7 +111,7 @@ export default function User() {
             setFormData({ ...formData, [e.target.name]: e.target.value });
     }
 
-    function handleChangeAmount(e, originalValue, maskedValue) {
+    function handleChangeAmount(e, originalValue) {
         setFormData({ ...formData, price: originalValue });
     } 
 

@@ -69,7 +69,7 @@ export default function Samurais() {
                         </tr>
                     </thead>
                     <tbody>
-                            {list.map((service, index) =>
+                            {list.map((service) =>
                                 <tr key={service.id}>
                                     <td>
                                         <div>

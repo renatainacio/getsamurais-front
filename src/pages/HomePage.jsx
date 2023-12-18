@@ -8,13 +8,6 @@ export default function HomePage() {
 
     const { auth } = useAuth();
     const navigate = useNavigate();
-    let config;
-
-    config = {
-        headers: {
-          "Authorization": `Bearer ${auth ? auth.token : ""}`
-        }
-      }
 
     useEffect(() => {
         auth ? navigate("/me") : "";

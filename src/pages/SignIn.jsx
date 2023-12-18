@@ -11,7 +11,6 @@ export default function SignIn() {
   const [loading, setLoading] = useState(false);
   const { signIn } = useAuth();
   const navigate = useNavigate();
-  const url = import.meta.env.VITE_API_URL;
   let config;
 
   function handleSubmit(e) {
